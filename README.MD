@@ -26,7 +26,7 @@ c.shuntingYard('5^3+(#(6-8)*sqrt(4^3))-3/6');//[5, 3, "^", 6, 8, "-", "#", 4, 3,
 ```
 
 Note: You have to use the # to represent the unary minus. If you don't and try to use the output in
-the "resolveReversePolishNotation" method it will throw an exception.
+the **solveReversePolishNotation** method it will throw an exception.
 
 ##Solving a Reverse Polish Notation array
 
@@ -54,7 +54,7 @@ c.solve('~4');//-5
 
 |Attribute|Explanation|Values|
 |:---:|:---:|:---:|
-|operands|Number of arguments that 'func' needs.<br>This correspond to the number of operands to operate.|1 or 2|
+|operands|Number of arguments that **func** needs. This correspond to the number of operands to operate.|1 or 2|
 |associativity|Associativity of the operator.|'l' or 'r' for left or right respectively|
 |precedence|Precedence of the operator. A greater number indicates a greater priority.|An integer|
 |func|The function definition of the operator.|A function with a number of parameters equal to **operands** attribute|
@@ -75,7 +75,7 @@ c.solve('myFunc(5, 3)');//7
 
 |Attribute|Explanation|Values|
 |:---:|:---:|:---:|
-|operands|Number of arguments that 'func' needs.|An integer from 0 to ...|
+|operands|Number of arguments that **func** needs.|An integer from 0 to ...|
 |func|The function definition.|A function with a number of parameters equal to **operands** attribute|
 
 ###Calculator internal attributes
@@ -97,7 +97,7 @@ c.solve('%1');//-1
 
 ##Catching errors
 
-```
+```javascript
 try {
    console.log(c.resolveReversePolishNotation(c.shuntingYard('5^3+(-(6-8)*sqrt(4^3))-3/6')));
 } catch(e) {
