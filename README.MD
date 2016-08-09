@@ -99,7 +99,7 @@ c.solve('%1');//-1
 
 ```javascript
 try {
-   console.log(c.resolveReversePolishNotation(c.shuntingYard('5^3+(-(6-8)*sqrt(4^3))-3/6')));
+   console.log(c.solveReversePolishNotation(c.shuntingYard('5^3+(-(6-8)*sqrt(4^3))-3/6')));
 } catch(e) {
    console.log(e);//"Insufficient values in the expression."
 }
