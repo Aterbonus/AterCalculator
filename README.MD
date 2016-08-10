@@ -114,7 +114,7 @@ try {
 
 This error is thrown because the "-" operator is binary and expects 2 operands in `-(6-8)`. Use # instead `#(6-8)`.
 
-#Built-in Operations
+#Built-in Stuff
 
 ##Operators
 
@@ -141,6 +141,14 @@ This error is thrown because the "-" operator is binary and expects 2 operands i
 |nth root|nrt|2 (degree of the root, x)|
 
 Note: The built-in trigonometric functions expect and return angles in degrees.
+
+##Symbols
+
+|Symbol|Value|
+|:---:|:---:|
+|pi|Math.PI|
+|e|Math.E|
+|π|Math.PI|
 
 #License
 

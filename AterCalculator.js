@@ -180,7 +180,7 @@ var AterCalculator = (function () {
             operatorsString = Object.keys(operators).map(this._regexEncode).sort(this._regexSort).join('|'),
             functionsString = Object.keys(functions).map(this._regexEncode).sort(this._regexSort).join('|'),
             symbolsString = Object.keys(symbols).map(this._regexEncode).sort(this._regexSort).join('|'),
-            tokens = string.match(new RegExp('\\d+(?:[\\.eE]\\d+)?|[()]' + (operatorsString.length > 0 ? '|' + operatorsString : '') + (functionsString.length > 0 ? '|' + functionsString : '') + (symbolsString.length > 0 ? '|' + symbolsString : ''), 'g')),
+            tokens = string.match(new RegExp('\\d+(?:[\\.]\\d+)?(?:[eE]\\d+)?|[()]' + (operatorsString.length > 0 ? '|' + operatorsString : '') + (functionsString.length > 0 ? '|' + functionsString : '') + (symbolsString.length > 0 ? '|' + symbolsString : ''), 'g')),
             output = [],
             stack = [],
             token,
