@@ -1,10 +1,7 @@
 /*jslint plusplus: true */
 /*Copyright (c) 2016 Gustavo Alfredo Marín Sáez
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
 var AterCalculator = (function () {
 
@@ -111,7 +108,19 @@ var AterCalculator = (function () {
                 func: function (a) {
                     return Math.sqrt(a).toFixed(this.decimals);
                 }
+            },
+            nrt: {
+                operands: 2,
+                func: function (n, x) {
+                    return Math.pow(10, (Math.log(x) / Math.log(10)) / n).toFixed(this.decimals);
+                }
             }
+        };
+
+        this.symbols = {
+            'pi': Math.PI,
+            'e': Math.E,
+            'π': Math.PI
         };
     }
 
@@ -167,9 +176,11 @@ var AterCalculator = (function () {
 
         var operators = this.operators,
             functions = this.functions,
-            operatorsString = Object.keys(operators).map(this._regexEncode).join('|'),
+            symbols = this.symbols,
+            operatorsString = Object.keys(operators).map(this._regexEncode).sort(this._regexSort).join('|'),
             functionsString = Object.keys(functions).map(this._regexEncode).sort(this._regexSort).join('|'),
-            tokens = string.match(new RegExp('\\d+(?:\\.\\d+)?|[()]' + (operatorsString.length > 0 ? '|' + operatorsString : '') + (functionsString.length > 0 ? '|' + functionsString : ''), 'g')),
+            symbolsString = Object.keys(symbols).map(this._regexEncode).sort(this._regexSort).join('|'),
+            tokens = string.match(new RegExp('\\d+(?:[\\.eE]\\d+)?|[()]' + (operatorsString.length > 0 ? '|' + operatorsString : '') + (functionsString.length > 0 ? '|' + functionsString : '') + (symbolsString.length > 0 ? '|' + symbolsString : ''), 'g')),
             output = [],
             stack = [],
             token,
@@ -192,7 +203,7 @@ var AterCalculator = (function () {
                 }
             } else if (operators[token]) {
                 operator = operators[token];
-                while (operators[stack[stack.length - 1]] && ((operator.associativity === 'l' && operator.precedence <= operators[stack[stack.length - 1]].precedence) || (operator.associativity === 'r' && operator.precedence < operators[stack[stack.length - 1]].precedence))) {
+                while (typeof operators[stack[stack.length - 1]] !== 'undefined' && ((operator.associativity === 'l' && operator.precedence <= operators[stack[stack.length - 1]].precedence) || (operator.associativity === 'r' && operator.precedence < operators[stack[stack.length - 1]].precedence))) {
                     output.push(stack.pop());
                 }
                 stack.push(token);
@@ -209,7 +220,7 @@ var AterCalculator = (function () {
                     throw 'Mismatched parentheses.';
                 }
             } else {
-                output.push(+token);
+                output.push(token);
             }
         }
 
@@ -236,6 +247,7 @@ var AterCalculator = (function () {
 
         var operators = this.operators,
             functions = this.functions,
+            symbols = this.symbols,
             resultStack = [],
             args = [],
             token,
@@ -258,7 +270,7 @@ var AterCalculator = (function () {
                 resultStack.push(+operator.func.apply(this, args));
                 args.length = 0;
             } else {
-                resultStack.push(token);
+                resultStack.push(typeof symbols[token] !== 'undefined' ? symbols[token] : +token);
             }
         }
         if (resultStack.length !== 1) {

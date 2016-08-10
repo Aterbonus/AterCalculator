@@ -78,9 +78,16 @@ c.solve('myFunc(5, 3)');//7
 |operands|Number of arguments that **func** needs.|An integer from 0 to ...|
 |func|The function definition.|A function with a number of parameters equal to **operands** attribute|
 
+###Adding a new symbol
+
+```javascript
+c.symbols['SQRT2'] = Math.SQRT2;
+c.solve('SQRT2');//1.4142135623730951
+```
+
 ###Calculator internal attributes
 
-* decimals: Number of decimals returned by built-in trigonometric functions
+* decimals: Number of decimals returned by built-in functions
 * unaryMinus: Unary minus operator symbol
 * binaryMinus: Binary minus (Sustraction) operator symbol
 
@@ -131,6 +138,7 @@ This error is thrown because the "-" operator is binary and expects 2 operands i
 |Arccosine|acos|1|
 |Arctangent|atan|1|
 |Square root|sqrt|1|
+|nth root|nrt|2 (degree of the root, x)|
 
 Note: The built-in trigonometric functions expect and return angles in degrees.
 
