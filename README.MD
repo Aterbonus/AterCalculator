@@ -1,17 +1,17 @@
-#AterCalculator
+# AterCalculator
 
 A JavaScript Calculator that uses the [Reverse Polish Notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation) and the [Shunting-yard Algorithm](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) to solve problems.
 
-#How to use it
+# How to use it
 
-##Solving a human-readable problem
+## Solving a human-readable problem
 
 ```javascript
 var c = new AterCalculator();
 c.solve('5^3+(-(6-8)*sqrt(4^3))-3/6');//140.5
 ```
 
-##Parse unary minus
+## Parse unary minus
 
 ```javascript
 c.parseUnaryMinus('-1-2(-3-4)-5+-6---7');//#1-2(#3-4)-5+#6-##7
@@ -19,7 +19,7 @@ c.parseUnaryMinus('-1-2(-3-4)-5+-6---7');//#1-2(#3-4)-5+#6-##7
 
 Note: This method strips white spaces.
 
-##Get an array of Shunting-yard tokens from a human-readable problem
+## Get an array of Shunting-yard tokens from a human-readable problem
 
 ```javascript
 c.shuntingYard('5^3+(#(6-8)*sqrt(4^3))-3/6');//[5, 3, "^", 6, 8, "-", "#", 4, 3, "^", "sqrt", "*", "+", 3, 6, "/", "-"]
@@ -28,15 +28,15 @@ c.shuntingYard('5^3+(#(6-8)*sqrt(4^3))-3/6');//[5, 3, "^", 6, 8, "-", "#", 4, 3,
 Note: You have to use the # to represent the unary minus. If you don't and try to use the output in
 the **solveReversePolishNotation** method it will throw an exception.
 
-##Solving a Reverse Polish Notation array
+## Solving a Reverse Polish Notation array
 
 ```javascript
 c.solveReversePolishNotation([5, 3, "^", 6, 8, "-", "#", 4, 3, "^", "sqrt", "*", "+", 3, 6, "/", "-"]);//140.5
 ```
 
-##Customising the Calculator
+## Customising the Calculator
 
-###Adding a new operator
+### Adding a new operator
 
 ```javascript
 c.operators['~'] = {
@@ -50,7 +50,7 @@ c.operators['~'] = {
 c.solve('~4');//-5
 ```
 
-###Structure of operators
+### Structure of operators
 
 |Attribute|Explanation|Values|
 |:---:|:---:|:---:|
@@ -59,7 +59,7 @@ c.solve('~4');//-5
 |precedence|Precedence of the operator. A greater number indicates a greater priority.|An integer|
 |func|The function definition of the operator.|A function with a number of parameters equal to **operands** attribute|
 
-###Adding a new function
+### Adding a new function
 
 ```javascript
 c.functions['myFunc'] = {
@@ -71,21 +71,21 @@ c.functions['myFunc'] = {
 c.solve('myFunc(5, 3)');//7
 ```
 
-###Structure of functions
+### Structure of functions
 
 |Attribute|Explanation|Values|
 |:---:|:---:|:---:|
 |operands|Number of arguments that **func** needs.|An integer from 0 to ...|
 |func|The function definition.|A function with a number of parameters equal to **operands** attribute|
 
-###Adding a new symbol
+### Adding a new symbol
 
 ```javascript
 c.symbols['SQRT2'] = Math.SQRT2;
 c.solve('SQRT2');//1.4142135623730951
 ```
 
-###Calculator internal attributes
+### Calculator internal attributes
 
 * decimals: Number of decimals returned by built-in functions
 * unaryMinus: Unary minus operator symbol
@@ -102,7 +102,7 @@ c.solve('#1');//1
 c.solve('%1');//-1
 ```
 
-##Catching errors
+## Catching errors
 
 ```javascript
 try {
@@ -114,9 +114,9 @@ try {
 
 This error is thrown because the "-" operator is binary and expects 2 operands in `-(6-8)`. Use # instead `#(6-8)`.
 
-#Built-in Stuff
+# Built-in Stuff
 
-##Operators
+## Operators
 
 |Operation|Symbol|Operands|Precedence|Associativity|
 |:---:|:---:|:---:|:---:|:---:|
@@ -127,7 +127,7 @@ This error is thrown because the "-" operator is binary and expects 2 operands i
 |Exponentiation|^|2|3|Right
 |Unary Minus|- (Context-dependent) <br> # (Explicit unary minus)|1|10|Right|
 
-##Functions
+## Functions
 
 |Function|Notation|Operands|
 |:---:|:---:|:---:|
@@ -142,7 +142,7 @@ This error is thrown because the "-" operator is binary and expects 2 operands i
 
 Note: The built-in trigonometric functions expect and return angles in degrees.
 
-##Symbols
+## Symbols
 
 |Symbol|Value|
 |:---:|:---:|
@@ -150,7 +150,7 @@ Note: The built-in trigonometric functions expect and return angles in degrees.
 |e|Math.E|
 |π|Math.PI|
 
-#License
+# License
 
 Copyright (c) 2016 Gustavo Alfredo Marín Sáez
 
